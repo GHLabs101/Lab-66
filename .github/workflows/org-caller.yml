@@ -1,0 +1,17 @@
+name: Use Org CI
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  call-org-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call reusable workflow from org
+        uses: your-org/.github/.github/workflows/org-ci.yml@v1
+        with:
+          run-tests: true
+          python-version: "3.12"
+        secrets: inherit
