@@ -1,0 +1,33 @@
+name: Org CI (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      run-tests:
+        type: boolean
+        default: true
+      python-version:
+        type: string
+        default: "3.11"
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+      - name: Simulated lint
+        run: echo "✅ Lint passed (simulated)"
+      - name: Simulated tests
+        if: ${{ inputs.run-tests }}
+        run: |
+          echo "🧪 Running tests (simulated)"
+          echo "OK"
+      - name: Upload org-standard artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: org-ci-summary
+          path: README.md
+          if-no-files-found: warn
